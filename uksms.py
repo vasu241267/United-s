@@ -182,7 +182,11 @@ def fetch_otp_loop():
 @app.route('/health')
 def health():
     return Response("OK", status=200)
-
+@app.route("/")
+def root():
+    logger.info("Root endpoint requested")
+    return Response("OK", status=200)
+    
 # Start the OTP fetching loop in a separate thread
 def start_otp_loop():
     if login():
@@ -195,5 +199,6 @@ if __name__ == '__main__':
     
     # Start the Flask web server
     app.run(host='0.0.0.0', port=8080)
+
 
 
