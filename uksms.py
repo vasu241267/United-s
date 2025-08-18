@@ -10,6 +10,9 @@ import telegram
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 import asyncio
 import os
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Configuration
 LOGIN_URL = "http://54.37.83.141/ints/signin"
@@ -199,6 +202,7 @@ if __name__ == '__main__':
     
     # Start the Flask web server
     app.run(host='0.0.0.0', port=8080)
+
 
 
 
