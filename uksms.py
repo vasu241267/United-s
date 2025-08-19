@@ -99,16 +99,17 @@ CHAT_IDS = [
 # Send message to Telegram with inline buttons
 async def send_telegram_message(time_, country, number, sender, message):
     formatted = (
-        f"🔔<b> {country} {sender} OTP Received</b> ✨\n"
-        "━━━━━━━━━━━━━━━━━━━━━━\n\n"
-        f"📲 <b>Number:</b> <code>{mask_number(number)}</code>\n"
-        f"📮 <b>Service:</b> <code>{sender}</code>\n"
-        "📨 <b>Message:</b>\n"
-        f"<blockquote><code>{html.escape(message)}</code></blockquote>\n\n"
-        "━━━━━━━━━━━━━━━━━━━━━━\n"
-        "⚡ Powered by\n <a href='https://t.me/aibro00'>꧁༒☬𝓐𝓲 𝓑𝓻𝓸☬༒꧂</a> ✨\n\n"
-        "Designed By <a href='https://t.me/DDXOTP'>DDXOTP</a> 🔥"
-    )
+    f"<blockquote>🔔 <b>{country} {sender} OTP Received</b> ✨</blockquote>\n"
+    "<blockquote>━━━━━━━━━━━━━━━━━━━━━━</blockquote>\n\n"
+    f"<blockquote>📲 <b>Number:</b> <code>{mask_number(number)}</code></blockquote>\n"
+    f"<blockquote>📮 <b>Service:</b> <code>{sender}</code></blockquote>\n"
+    "<blockquote>📨 <b>Message:</b></blockquote>\n"
+    f"<blockquote><code>{html.escape(message)}</code></blockquote>\n\n"
+    "<blockquote>━━━━━━━━━━━━━━━━━━━━━━</blockquote>\n"
+    "<blockquote>⚡ Powered by <a href='https://t.me/aibro00'>꧁༒☬𝓐𝓲 𝓑𝓻𝓸☬༒꧂</a> ✨</blockquote>\n"
+    "<blockquote>👨‍💻 Designed By <a href='https://t.me/DDXOTP'>DDXOTP</a> 🔥</blockquote>"
+)
+
 
     keyboard = [
         [
@@ -210,6 +211,7 @@ if __name__ == '__main__':
     
     # Start the Flask web server
     app.run(host='0.0.0.0', port=8080)
+
 
 
 
