@@ -89,20 +89,26 @@ def mask_number(number):
 
 
 # Send message to Telegram with inline buttons
+CHAT_IDS = [
+    "-1002184298640",   # Group 1
+    "-1002734602060",   # Group 2
+    "-1002756161312",   # Group 3
+    "-1002676282800"    # Group 4
+]
+
+# Send message to Telegram with inline buttons
 async def send_telegram_message(time_, country, number, sender, message):
     formatted = (
-    f"🔔<b> {country} {sender} OTP Received</b> ✨\n"
-    "━━━━━━━━━━━━━━━━━━━━━━\n\n"
-    f"📲 <b>Number:</b> <code>{mask_number(number)}</code>\n"
-    f"📮 <b>Service:</b> <code>{sender}</code>\n"
-    "📨 <b>Message:</b>\n"
-    f"<blockquote><code>{html.escape(message)}</code></blockquote>\n\n"
-    
-    "━━━━━━━━━━━━━━━━━━━━━━\n"
-    "⚡ Powered by\n <a href='https://t.me/aibro00'>꧁༒☬𝓐𝓲 𝓑𝓻𝓸☬༒꧂</a> ✨\n\n" "Designed By by <a href='https://t.me/DDXOTP'>DDXOTP</a> 🔥"
-
-)
-
+        f"🔔<b> {country} {sender} OTP Received</b> ✨\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"📲 <b>Number:</b> <code>{mask_number(number)}</code>\n"
+        f"📮 <b>Service:</b> <code>{sender}</code>\n"
+        "📨 <b>Message:</b>\n"
+        f"<blockquote><code>{html.escape(message)}</code></blockquote>\n\n"
+        "━━━━━━━━━━━━━━━━━━━━━━\n"
+        "⚡ Powered by\n <a href='https://t.me/aibro00'>꧁༒☬𝓐𝓲 𝓑𝓻𝓸☬༒꧂</a> ✨\n\n"
+        "Designed By <a href='https://t.me/DDXOTP'>DDXOTP</a> 🔥"
+    )
 
     keyboard = [
         [
@@ -112,18 +118,20 @@ async def send_telegram_message(time_, country, number, sender, message):
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
 
-   
+    # Add 0.5s gap before sending any message
+    await asyncio.sleep(1)
 
-        # Add 0.5s gap before sending any message
-    await asyncio.sleep(0.5)
-
-    await bot.send_message(
-        chat_id=CHAT_ID,
-        text=formatted,
-        reply_markup=reply_markup,
-        disable_web_page_preview=True,
-        parse_mode="HTML"
-    )
+    for chat_id in CHAT_IDS:
+        try:
+            await bot.send_message(
+                chat_id=chat_id,
+                text=formatted,
+                reply_markup=reply_markup,
+                disable_web_page_preview=True,
+                parse_mode="HTML"
+            )
+        except Exception as e:
+            logger.error(f"❌ Failed to send to {chat_id}: {e}")
 
 
 
@@ -202,6 +210,7 @@ if __name__ == '__main__':
     
     # Start the Flask web server
     app.run(host='0.0.0.0', port=8080)
+
 
 
 
