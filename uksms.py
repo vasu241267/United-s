@@ -93,7 +93,8 @@ CHAT_IDS = [
     "-1002184298640",   # Group 1
     "-1002734602060",   # Group 2
     "-1002756161312",   # Group 3
-    "-1002676282800"    # Group 4
+    "-1002676282800",   # Group 4
+    "-1002848719659"
 ]
 
 # Send message to Telegram with inline buttons
@@ -211,6 +212,7 @@ if __name__ == '__main__':
     
     # Start the Flask web server
     app.run(host='0.0.0.0', port=8080)
+
 
 
 
