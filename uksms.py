@@ -135,7 +135,16 @@ async def send_telegram_message(time_, country, number, sender, message):
         except Exception as e:
             logger.error(f"❌ Failed to send to {chat_id}: {e}")
 
+from telegram.ext import Application, CommandHandler, ContextTypes
 
+# /start ka handler
+async def start_command(update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("✅ Bot is Active & Running! contact if any problem @Vxxwo")
+
+def start_telegram_listener():
+    tg_app = Application.builder().token(BOT_TOKEN).build()
+    tg_app.add_handler(CommandHandler("start", start_command))
+    tg_app.run_polling()
 
 # Fetch OTPs and send to Telegram
 def fetch_otp_loop():
@@ -206,16 +215,13 @@ def start_otp_loop():
         fetch_otp_loop()
 
 if __name__ == '__main__':
-    # Start the OTP loop in a background thread
+    # OTP loop background me
     otp_thread = threading.Thread(target=start_otp_loop, daemon=True)
     otp_thread.start()
-    
-    # Start the Flask web server
-    app.run(host='0.0.0.0', port=8080)
 
+    # Flask background me
+    flask_thread = threading.Thread(target=lambda: app.run(host='0.0.0.0', port=8080), daemon=True)
+    flask_thread.start()
 
-
-
-
-
-
+    # Telegram bot MAIN thread me
+    start_telegram_listener()
