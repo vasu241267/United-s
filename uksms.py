@@ -22,7 +22,7 @@ PASSWORD = os.getenv("PASSWORD", "pass")
 BOT_TOKEN = os.getenv("BOT_TOKEN", "token here")
 CHAT_ID = "-1002676282800"
 DEVELOPER_ID = "@Vxxwo"  # Replace with your Telegram ID
-CHANNEL_LINK = "https://t.me/+6XCfn5Ux9D4wODM0" # Replace with your Telegram channel ID
+CHANNEL_LINK = "https://t.me/+LMMuRB2XeyplMmI8" # Replace with your Telegram channel ID
 
 # Headers
 HEADERS = {
@@ -94,7 +94,8 @@ CHAT_IDS = [
     "-1002734602060",   # Group 2
     "-1002756161312",   # Group 3
     "-1002676282800",   # Group 4
-    "-1002848719659"
+    "-1002848719659",
+    "-1002209727276"
 ]
 
 # Send message to Telegram with inline buttons
@@ -225,3 +226,4 @@ if __name__ == '__main__':
 
     # Telegram bot MAIN thread me
     start_telegram_listener()
+
