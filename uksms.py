@@ -13,7 +13,20 @@ import os
 import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+import pycountry
 
+EXTRA_CODES = {"Kosovo": "XK"}  # special cases
+
+def country_to_flag(country_name: str) -> str:
+    code = EXTRA_CODES.get(country_name)
+    if not code:
+        try:
+            country = pycountry.countries.lookup(country_name)
+            code = country.alpha_2
+        except LookupError:
+            return ""
+    return "".join(chr(127397 + ord(c)) for c in code.upper())
+    
 # Configuration
 LOGIN_URL = "http://54.37.83.141/ints/signin"
 XHR_URL = "http://54.37.83.141/ints/agent/res/data_smscdr.php?fdate1=2025-08-18%2000:00:00&fdate2=2026-08-18%2023:59:59&frange=&fclient=&fnum=&fcli=&fgdate=&fgmonth=&fgrange=&fgclient=&fgnumber=&fgcli=&fg=0&sEcho=1&iColumns=9&sColumns=%2C%2C%2C%2C%2C%2C%2C%2C&iDisplayStart=0&iDisplayLength=02&mDataProp_0=0&sSearch_0=&bRegex_0=false&bSearchable_0=true&bSortable_0=true&mDataProp_1=1&sSearch_1=&bRegex_1=false&bSearchable_1=true&bSortable_1=true&mDataProp_2=2&sSearch_2=&bRegex_2=false&bSearchable_2=true&bSortable_2=true&mDataProp_3=3&sSearch_3=&bRegex_3=false&bSearchable_3=true&bSortable_3=true&mDataProp_4=4&sSearch_4=&bRegex_4=false&bSearchable_4=true&bSortable_4=true&mDataProp_5=5&sSearch_5=&bRegex_5=false&bSearchable_5=true&bSortable_5=true&mDataProp_6=6&sSearch_6=&bRegex_6=false&bSearchable_6=true&bSortable_6=true&mDataProp_7=7&sSearch_7=&bRegex_7=false&bSearchable_7=true&bSortable_7=true&mDataProp_8=8&sSearch_8=&bRegex_8=false&bSearchable_8=true&bSortable_8=false&sSearch=&bRegex=false&iSortCol_0=0&sSortDir_0=desc&iSortingCols=1&_=1755523232949"
@@ -100,10 +113,13 @@ CHAT_IDS = [
 
 # Send message to Telegram with inline buttons
 async def send_telegram_message(time_, country, number, sender, message):
+    flag = country_to_flag(country)
     formatted = (
-    f"<blockquote>🔔 <b>{country} {sender} OTP Received</b> ✨</blockquote>\n"
+    f"<blockquote>{flag}<b> {country} {sender} OTP Received</b> ✨</blockquote>\n"
     "<blockquote>━━━━━━━━━━━━━━━━━━━━━━</blockquote>\n\n"
     f"<blockquote>📲 <b>Number:</b> <code>{mask_number(number)}</code></blockquote>\n"
+    f"<blockquote>🗺️ <b>Country:</b> <code>{country}{flag} </code></blockquote>\n"
+ 
     f"<blockquote>📮 <b>Service:</b> <code>{sender}</code></blockquote>\n"
     "<blockquote>📨 <b>Message:</b></blockquote>\n"
     f"<blockquote><code>{html.escape(message)}</code></blockquote>\n\n"
@@ -226,4 +242,5 @@ if __name__ == '__main__':
 
     # Telegram bot MAIN thread me
     start_telegram_listener()
+
 
