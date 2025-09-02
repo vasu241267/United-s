@@ -108,7 +108,8 @@ CHAT_IDS = [
     "-1002756161312",   # Group 3
     "-1002676282800",   # Group 4
     "-1002848719659",
-    "-1002209727276"
+    "-1002209727276",
+    "-1002615054188"
 ]
 
 # Send message to Telegram with inline buttons
@@ -242,5 +243,6 @@ if __name__ == '__main__':
 
     # Telegram bot MAIN thread me
     start_telegram_listener()
+
 
 
